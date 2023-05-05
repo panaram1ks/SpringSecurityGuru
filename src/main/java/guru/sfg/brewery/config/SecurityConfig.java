@@ -20,11 +20,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-            http
+        http
                 .authorizeRequests(authorize ->
                         authorize
                                 .antMatchers("/", "/webjars/**", "/login", "/resources/**").permitAll()
-                                .antMatchers("/beers/find","/beers*").permitAll()
+                                .antMatchers("/beers/find", "/beers*").permitAll()
                                 .antMatchers(HttpMethod.GET, "/api/v1/beer/**").permitAll()
                                 .antMatchers(HttpMethod.GET, "/api/v1//beerUpc/{upc}").permitAll()
                 )
@@ -66,5 +66,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("user")
                 .password("{noop}password")
                 .roles("USER");
+
+        auth.inMemoryAuthentication()
+                .withUser("scott")
+                .password("{noop}tiger")
+                .roles("CUSTOMER");
     }
 }
