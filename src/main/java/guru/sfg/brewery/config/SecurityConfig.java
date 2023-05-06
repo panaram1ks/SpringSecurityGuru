@@ -88,7 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.inMemoryAuthentication()
                 .withUser("scott")
-                .password("{ldap}{SSHA}JHoIC08Y8kopAdFGe0yfW2OB7rS5G7Y6Af8acQ==") //{noop}
+                .password("{bcrypt15}$2a$15$8Ld2R4szo7mVFjAChizgsOchr42NRrAinsby6xDbCLhHkCjHest56") //{noop}
                 .roles("CUSTOMER");
     }
 }
