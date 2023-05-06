@@ -1,6 +1,7 @@
 package guru.sfg.brewery.config;
 
 
+import guru.sfg.brewery.security.RequestParamAuthFilter;
 import guru.sfg.brewery.security.RestHeaderAuthFilter;
 import guru.sfg.brewery.security.SfgPasswordEncoderFactories;
 import org.springframework.context.annotation.Bean;
@@ -38,8 +39,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return filter;
     }
 
+    public RequestParamAuthFilter requestParamAuthFilter(AuthenticationManager authenticationManager){
+        RequestParamAuthFilter filter = new RequestParamAuthFilter(new AntPathRequestMatcher("/api/**"));
+        filter.setAuthenticationManager(authenticationManager);
+        return filter;
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.addFilterBefore(requestParamAuthFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
 
         http.addFilterBefore(restHeaderAuthFilter(authenticationManager()),
                 UsernamePasswordAuthenticationFilter.class).csrf().disable();
@@ -104,7 +112,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.inMemoryAuthentication()
                 .withUser("scott")
-                .password("{bcrypt15}$2a$15$8Ld2R4szo7mVFjAChizgsOchr42NRrAinsby6xDbCLhHkCjHest56") //{noop}
+                .password("{bcrypt10}$2a$15$8Ld2R4szo7mVFjAChizgsOchr42NRrAinsby6xDbCLhHkCjHest56") //{noop}
                 .roles("CUSTOMER");
     }
 }
