@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.LdapShaPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -67,23 +68,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        return NoOpPasswordEncoder.getInstance();
 //        return new LdapShaPasswordEncoder();
 //        return new StandardPasswordEncoder();
-        return new BCryptPasswordEncoder();
+//        return new BCryptPasswordEncoder();
+
+        //Delegate it to spring framework
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("spring")
-                .password("bc216996e2d2d80377b144e0bdf31cc041e93977b74aeb6c72db82d52e7a78d8f9050cfb94696e7a") //{noop}
+                .password("{bcrypt}$2a$12$/ADUThGsiVP4iW0BEFnVzuoUfjrZtc0r2LpHitTyV1LZGifUfAbvu") //{noop}
                 .roles("ADMIN")
                 .and()
                 .withUser("user")
-                .password("$2a$12$rMmkaGkUTOelW3KE35X.Ge8I1OKnNbRTots4pqCuqCv0UsRyiWELO") //{noop}
+                .password("{sha256}921b95c2f47fb7c9886558d8a6d4e40ccbbb3b8153ae24d1cb537c7e9342d7b6d41ed58649518934") //{noop}
                 .roles("USER");
 
         auth.inMemoryAuthentication()
                 .withUser("scott")
-                .password("tiger") //{noop}
+                .password("{ldap}{SSHA}JHoIC08Y8kopAdFGe0yfW2OB7rS5G7Y6Af8acQ==") //{noop}
                 .roles("CUSTOMER");
     }
 }
