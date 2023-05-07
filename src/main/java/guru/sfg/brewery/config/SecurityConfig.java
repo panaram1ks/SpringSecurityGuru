@@ -33,13 +33,13 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-    public RestHeaderAuthFilter restHeaderAuthFilter(AuthenticationManager authenticationManager){
+    public RestHeaderAuthFilter restHeaderAuthFilter(AuthenticationManager authenticationManager) {
         RestHeaderAuthFilter filter = new RestHeaderAuthFilter(new AntPathRequestMatcher("/api/**"));
         filter.setAuthenticationManager(authenticationManager);
         return filter;
     }
 
-    public RequestParamAuthFilter requestParamAuthFilter(AuthenticationManager authenticationManager){
+    public RequestParamAuthFilter requestParamAuthFilter(AuthenticationManager authenticationManager) {
         RequestParamAuthFilter filter = new RequestParamAuthFilter(new AntPathRequestMatcher("/api/**"));
         filter.setAuthenticationManager(authenticationManager);
         return filter;
@@ -54,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests(authorize ->
                         authorize
+                                .antMatchers("/h2-console/**").permitAll() // do not use in production
                                 .antMatchers("/", "/webjars/**", "/login", "/resources/**").permitAll()
                                 .antMatchers("/beers/find", "/beers*").permitAll()
                                 .antMatchers(HttpMethod.GET, "/api/v1/beer/**").permitAll()
@@ -66,6 +67,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .and()
                 .httpBasic();
+
+        // h2 console config
+        http.headers().frameOptions().sameOrigin();
     }
 
 //    @Override
@@ -88,7 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
 //        return NoOpPasswordEncoder.getInstance();
 //        return new LdapShaPasswordEncoder();
 //        return new StandardPasswordEncoder();
