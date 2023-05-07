@@ -1,9 +1,11 @@
 package guru.sfg.brewery.config;
 
 
+import guru.sfg.brewery.security.JpaUserDetailsService;
 import guru.sfg.brewery.security.RequestParamAuthFilter;
 import guru.sfg.brewery.security.RestHeaderAuthFilter;
 import guru.sfg.brewery.security.SfgPasswordEncoderFactories;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.ExampleMatcher;
@@ -102,20 +104,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return SfgPasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("spring")
-                .password("{bcrypt}$2a$12$/ADUThGsiVP4iW0BEFnVzuoUfjrZtc0r2LpHitTyV1LZGifUfAbvu") //{noop}
-                .roles("ADMIN")
-                .and()
-                .withUser("user")
-                .password("{sha256}921b95c2f47fb7c9886558d8a6d4e40ccbbb3b8153ae24d1cb537c7e9342d7b6d41ed58649518934") //{noop}
-                .roles("USER");
+    //it is do not need as it is one instance in application and spring know and take it
+//    @Autowired
+//    JpaUserDetailsService jpaUserDetailsService;
 
-        auth.inMemoryAuthentication()
-                .withUser("scott")
-                .password("{bcrypt10}$2a$15$8Ld2R4szo7mVFjAChizgsOchr42NRrAinsby6xDbCLhHkCjHest56") //{noop}
-                .roles("CUSTOMER");
-    }
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+////        auth.inMemoryAuthentication()
+////                .withUser("spring")
+////                .password("{bcrypt}$2a$12$/ADUThGsiVP4iW0BEFnVzuoUfjrZtc0r2LpHitTyV1LZGifUfAbvu") //{noop}
+////                .roles("ADMIN")
+////                .and()
+////                .withUser("user")
+////                .password("{sha256}921b95c2f47fb7c9886558d8a6d4e40ccbbb3b8153ae24d1cb537c7e9342d7b6d41ed58649518934") //{noop}
+////                .roles("USER");
+////
+////        auth.inMemoryAuthentication()
+////                .withUser("scott")
+////                .password("{bcrypt10}$2a$15$8Ld2R4szo7mVFjAChizgsOchr42NRrAinsby6xDbCLhHkCjHest56") //{noop}
+////                .roles("CUSTOMER");
+//
+////        auth.userDetailsService(jpaUserDetailsService).passwordEncoder(passwordEncoder());
+//    }
+
 }
