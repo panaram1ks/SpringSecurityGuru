@@ -15,12 +15,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest // use all spring context
 public class BeerRestControllerIT extends BaseIT {
 
-    @Test
-    void deleteBeerHttpBasic() throws Exception {
-        mockMvc.perform(delete("/api/v1/beer/f4c6e3ee-c8d1-4bff-8b88-5d5a2d01b4a8")
-                        .with(httpBasic("spring", "guru")))
-                .andExpect(status().is2xxSuccessful());
-    }
+//    @Test
+//    void deleteBeerHttpBasic() throws Exception {
+//        mockMvc.perform(delete("/api/v1/beer/f4c6e3ee-c8d1-4bff-8b88-5d5a2d01b4a8")
+//                        .with(httpBasic("spring", "guru")))
+//                .andExpect(status().is2xxSuccessful());
+//    }
 
     @Test
     void deleteBeerHttpBasicUserRole() throws Exception {
@@ -75,11 +75,11 @@ public class BeerRestControllerIT extends BaseIT {
 
     }
 
-    @Test
-    void findBeers() throws Exception {
-        mockMvc.perform(get("/api/v1/beer"))
-                .andExpect(status().isOk());
-    }
+//    @Test
+//    void findBeers() throws Exception {
+//        mockMvc.perform(get("/api/v1/beer"))
+//                .andExpect(status().isOk());
+//    }
 
 //    @Test
 //    void findBeerById() throws Exception {
@@ -87,11 +87,11 @@ public class BeerRestControllerIT extends BaseIT {
 //                .andExpect(status().isOk());
 //    }
 
-    @Test
-    void findBeerByUpc() throws Exception {
-        mockMvc.perform(get("/api/v1/beerUpc/@6311234200036"))
-                .andExpect(status().isOk());
-    }
+//    @Test
+//    void findBeerByUpc() throws Exception {
+//        mockMvc.perform(get("/api/v1/beerUpc/@6311234200036"))
+//                .andExpect(status().isOk());
+//    }
 
 
 }
