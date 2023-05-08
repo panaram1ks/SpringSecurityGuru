@@ -75,11 +75,29 @@ public class BeerRestControllerIT extends BaseIT {
 
     }
 
-//    @Test
-//    void findBeers() throws Exception {
-//        mockMvc.perform(get("/api/v1/beer"))
-//                .andExpect(status().isOk());
-//    }
+    @Test
+    void findBeersAdmin() throws Exception {
+        mockMvc.perform(get("/api/v1/beer").with(httpBasic("spring", "guru")))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void findBeersUser() throws Exception {
+        mockMvc.perform(get("/api/v1/beer").with(httpBasic("user", "password")))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void findBeersCustomer() throws Exception {
+        mockMvc.perform(get("/api/v1/beer").with(httpBasic("scott", "tiger")))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void findBeersNoAuth() throws Exception {
+        mockMvc.perform(get("/api/v1/beer"))
+                .andExpect(status().isUnauthorized());
+    }
 
 //    @Test
 //    void findBeerById() throws Exception {
@@ -87,11 +105,27 @@ public class BeerRestControllerIT extends BaseIT {
 //                .andExpect(status().isOk());
 //    }
 
-//    @Test
-//    void findBeerByUpc() throws Exception {
-//        mockMvc.perform(get("/api/v1/beerUpc/@6311234200036"))
-//                .andExpect(status().isOk());
-//    }
+    @Test
+    void findBeerByUpcAdmin() throws Exception {
+        mockMvc.perform(get("/api/v1/beerUpc/0631234200036").with(httpBasic("spring","guru")))
+                .andExpect(status().isOk());
+    }
+    @Test
+    void findBeerByUpcUser() throws Exception {
+        mockMvc.perform(get("/api/v1/beerUpc/0631234200036").with(httpBasic("user","password")))
+                .andExpect(status().isOk());
+    }
+    @Test
+    void findBeerByUpcCustomer() throws Exception {
+        mockMvc.perform(get("/api/v1/beerUpc/0631234200036").with(httpBasic("scott","tiger")))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void findBeerByUpcNoAuth() throws Exception {
+        mockMvc.perform(get("/api/v1/beerUpc/0631234200036"))
+                .andExpect(status().isUnauthorized());
+    }
 
 
 }
