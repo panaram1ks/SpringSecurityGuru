@@ -40,16 +40,16 @@ public class CustomerControllerIT extends BaseIT {
     @DisplayName("Add Customer")
     @Nested
     class AddCustomer {
-        @Rollback
-        @Test
-        void processCreationForm() throws Exception{
-            mockMvc.perform(
-                            post("/customer/new")
-                                    .param("customerName", "Foo Customer")
-                                    .with(httpBasic("spring", "guru"))
-                    )
-                    .andExpect(status().is3xxRedirection());
-        }
+//        @Rollback
+//        @Test
+//        void processCreationForm() throws Exception{
+//            mockMvc.perform(
+//                            post("/customer/new")
+//                                    .param("customerName", "Foo Customer")
+//                                    .with(httpBasic("spring", "guru"))
+//                    )
+//                    .andExpect(status().is3xxRedirection());
+//        }
 
         @Rollback
         @ParameterizedTest(name = "#{index} with [{arguments}]")

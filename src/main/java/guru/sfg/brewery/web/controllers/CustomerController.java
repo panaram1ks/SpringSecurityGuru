@@ -49,7 +49,8 @@ public class CustomerController {
         return "customers/findCustomers";
     }
 
-    @Secured({"ROLE_ADMIN", "ROLE_CUSTOMER"})
+    @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
+   // @Secured({"ROLE_ADMIN", "ROLE_CUSTOMER"})
     @GetMapping
     public String processFindFormReturnMany(Customer customer, BindingResult result, Model model) {
         // find customers by name
@@ -84,6 +85,8 @@ public class CustomerController {
         return "customers/createCustomer";
     }
 
+
+    @Secured({"ROLE_ADMIN"})
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/new")
     public String processCreationForm(Customer customer) {
