@@ -47,6 +47,10 @@ public abstract class BaseIT {
                 .build();
     }
 
+    public static Stream<Arguments> getStreeamAdminCustomer(){
+        return Stream.of(Arguments.of("spring", "guru"),Arguments.of("scott", "tiger"));
+    }
+
     public static Stream<Arguments> getStreamAllUsers(){
         return Stream.of(Arguments.of("spring", "guru"), Arguments.of("user", "password"),Arguments.of("scott", "tiger"));
     }
