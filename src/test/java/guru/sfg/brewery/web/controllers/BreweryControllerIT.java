@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-public class BreweryControllerIT extends BaseIT{
+public class BreweryControllerIT extends BaseIT {
 
     @Test
     void testBreweriesCustomer() throws Exception {
@@ -32,6 +32,18 @@ public class BreweryControllerIT extends BaseIT{
     void testBreweriesNotAuthenticated() throws Exception {
         mockMvc.perform(get("/brewery/api/v1/breweries"))
                 .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void listBreweriesUser() throws Exception {
+        mockMvc.perform(get("/brewery/breweries")
+                        .with(httpBasic("user", "password")))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void listBreweriesNOAUTH() throws Exception {
+        mockMvc.perform(get("/brewery/breweries")).andExpect(status().isUnauthorized());
     }
 
 }
